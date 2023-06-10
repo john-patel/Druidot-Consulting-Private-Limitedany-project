@@ -1,0 +1,123 @@
+{% comment %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+</form>
+{% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django App</title>
+</head>
+<style>
+    /* Form container */
+    .form-container {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .section {
+        margin-top: 200px;
+    } 
+
+    .header {
+        font-family: 'Arial';
+        text-align: center;
+        font-size: 50px;
+    }
+
+    /* Form fields */
+    .form-field {
+        margin-bottom: 15px;
+    }
+
+    /* Label styling */
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    /* File input styling */
+    .file-input {
+        display: block;
+        margin-top: 5px;
+    }
+
+    /* Submit button styling */
+    .submit-button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    /* Submit button hover effect */
+    .submit-button:hover {
+        background-color: #45a049;
+    }
+
+    .success-message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #dff0d8;
+        color: #3c763d;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .extracted_text-message {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #D3D3D3;
+        color: black;
+        padding: 10px;
+        border-radius: 5px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+</style>
+<body>
+    <section class="section">
+        <h1 class="header">Img to Text Converter App</h1>
+        <div class="form-container">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'upload' %}">
+                {% csrf_token %}
+        
+                <div class="form-field">
+                    <label for="{{ form.image.id_for_label }}">Image:</label>
+                    {{ form.image }}
+                </div>
+                
+                <div class="form-field">
+                    <label for="{{ form.scheduled_time.id_for_label }}">Scheduled Time:</label>
+                    {{ form.scheduled_time }}
+                </div>
+                
+                <button class="submit-button" type="submit">Upload</button>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="success-message">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                {% if extracted_text %}
+                    <div class="extracted_text-message">
+                        {{ extracted_text | safe }}
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </section>
+</body>
+</html>
